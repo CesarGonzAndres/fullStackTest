@@ -21,5 +21,11 @@ $router->get('/key', function () {
 	return str_random(32);
 });
 
-$router->get('users', ['uses' => 'UsersController@index']);
-$router->post('users', ['uses' => 'UsersController@createUser']);
+
+$router->group(['middleware' => ['auth']], function () use ($router) {
+	
+	$router->get('users', ['uses' => 'UsersController@index']);
+	$router->post('users', ['uses' => 'UsersController@createUser']);
+
+});
+
